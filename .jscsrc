@@ -1,0 +1,17 @@
+{
+  "preset": "google",
+  "disallowSpacesInAnonymousFunctionExpression": null,
+  "excludeFiles": [
+    "node_modules/**"
+  ],
+  "validateIndentation": false,
+  "requireCurlyBraces": [
+    "for",
+    "try",
+    "catch"
+  ],
+  "disallowMultipleVarDecl": false,
+  "maximumLineLength": 1500,
+  "maxErrors": 5000,
+  "disallowKeywordsOnNewLine": false
+}

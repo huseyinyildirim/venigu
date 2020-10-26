@@ -1,0 +1,101 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-toolbox"></i> Eklentiler</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="#">Ayarlar</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Eklentiler</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <!-- New -->
+            <form id="form-new" action="{{ current_path() }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+
+
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab" aria-controls="nav-general" aria-selected="true">Analiz</a>
+                        <a class="nav-item nav-link" id="nav-verification-tab" data-toggle="tab" href="#nav-verification" role="tab" aria-controls="nav-verification" aria-selected="false">Doğrulama</a>
+                        <a class="nav-item nav-link" id="nav-support-tab" data-toggle="tab" href="#nav-support" role="tab" aria-controls="nav-support" aria-selected="false">Destek</a>
+                    </div>
+                </nav>
+                <div class="tab-content p-3 mb-3 border-left border-bottom border-right" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="google_analytics">Google Analytics</label>
+                                <textarea type="text" class="form-control{{ errors.google_analytics ? ' is-invalid':'' }}" id="google_analytics" name="google_analytics" rows="5">{{ table.google_analytics | raw }}</textarea>
+                                <div class="invalid-feedback">{{ errors.google_analytics }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="google_analytics_id">Google Analytics ID</label>
+                                <input type="text" class="form-control{{ errors.google_analytics_id ? ' is-invalid':'' }}" id="google_analytics_id" name="google_analytics_id" value="{{ table.google_analytics_id }}" maxlength="50">
+                                <div class="invalid-feedback">{{ errors.title | first }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="yandex_metrica">Yandex Metrica</label>
+                                <textarea type="text" class="form-control{{ errors.yandex_metrica ? ' is-invalid':'' }}" id="yandex_metrica" name="yandex_metrica" rows="5">{{ table.yandex_metrica | raw }}</textarea>
+                                <div class="invalid-feedback">{{ errors.yandex_metrica }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="yandex_metrica_id">Yandex Metrica ID</label>
+                                <input type="text" class="form-control{{ errors.yandex_metrica_id ? ' is-invalid':'' }}" id="yandex_metrica_id" name="yandex_metrica_id" value="{{ table.yandex_metrica_id }}" maxlength="50">
+                                <div class="invalid-feedback">{{ errors.yandex_metrica_id | first }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-verification" role="tabpanel" aria-labelledby="nav-verification-tab">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="google_site_verification">Google Site Verification</label>
+                                <input type="text" class="form-control{{ errors.google_site_verification ? ' is-invalid':'' }}" id="google_site_verification" name="google_site_verification" value="{{ table.google_site_verification | raw }}" maxlength="250">
+                                <div class="invalid-feedback">{{ errors.google_site_verification | first }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="bing_site_verification">Bing Site Verification</label>
+                                <input type="text" class="form-control{{ errors.bing_site_verification ? ' is-invalid':'' }}" id="bing_site_verification" name="bing_site_verification" value="{{ table.bing_site_verification | raw }}" maxlength="250">
+                                <div class="invalid-feedback">{{ errors.bing_site_verification | first }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-support" role="tabpanel" aria-labelledby="nav-support-tab">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="support_chat">Online Destek</label>
+                                <textarea type="text" class="form-control{{ errors.support_chat ? ' is-invalid':'' }}" id="support_chat" name="support_chat" rows="5">{{ table.support_chat | raw }}</textarea>
+                                <div class="invalid-feedback">{{ errors.support_chat }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Düzenle</button> <button type="reset" class="btn btn-secondary reset"><i class="fas fa-eraser"></i> Formu Temizle</button>
+                {{ csrf.field | raw }}
+            </form>
+            <!-- New -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/extension/edit.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/extension/edit.js"></script>
+{% endblock %}

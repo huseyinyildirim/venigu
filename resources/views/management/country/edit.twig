@@ -1,0 +1,70 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-globe"></i> Ülke Düzenle</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="#">Lokasyon</a></li>
+                <li class="breadcrumb-item"><a href="{{ path_for('management-country') }}">Ülkeler</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Ülke Düzenle</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <!-- New -->
+            <form id="form-new" action="{{ current_path() }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="binary_code">Kısa Kodu</label>
+                        <input type="text" class="form-control{{ errors.binary_code ? ' is-invalid':'' }}" id="binary_code" name="binary_code" value="{{ table.binary_code }}" minlength="2" maxlength="2" required>
+                        <div class="invalid-feedback">{{ errors.binary_code ? errors.binary_code | first:'Kısa kodu giriniz.' }}</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="triple_code">Uzun Kod</label>
+                        <input type="text" class="form-control{{ errors.triple_code ? ' is-invalid':'' }}" id="triple_code" name="triple_code" value="{{ table.triple_code }}" minlength="3" maxlength="3" required>
+                        <div class="invalid-feedback">{{ errors.triple_code ? errors.triple_code | first:'Uzun kodu giriniz.' }}</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="title">Ülke Adı</label>
+                        <input type="text" class="form-control{{ errors.title ? ' is-invalid':'' }}" id="title" name="title" value="{{ table.title }}" minlength="2" maxlength="50" required>
+                        <div class="invalid-feedback">{{ errors.title ? errors.title | first:'Ülke adını giriniz.' }}</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="phone_code">Telefon Kodu</label>
+                        <input type="text" class="form-control{{ errors.phone_code ? ' is-invalid':'' }}" id="phone_code" name="phone_code" value="{{ table.phone_code }}" maxlength="6" required>
+                        <div class="invalid-feedback">{{ errors.phone_code ? errors.phone_code | first:'Telefon kodunu giriniz.' }}</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="switch">
+                        <input type="checkbox" class="switch" id="switch-normal" name="is_active" {{ table.is_active=='1' ? ' checked' : null }}>
+                        <label for="switch-normal">Aktif mi?</label>
+                    </span>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Düzenle</button> <button type="reset" class="btn btn-secondary reset"><i class="fas fa-eraser"></i> Formu Temizle</button>
+                {{ csrf.field | raw }}
+            </form>
+            <!-- New -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/library/bs4-switch.min.css">
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/country/edit.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/country/edit.js"></script>
+{% endblock %}

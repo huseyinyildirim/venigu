@@ -1,0 +1,41 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-briefcase"></i> Görev Düzenle</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="{{ path_for('management-job') }}">Görevler</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Görev Düzenle</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <!-- New -->
+            <form id="form-new" action="{{ current_path() }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="title">Görev</label>
+                        <input type="text" class="form-control{{ errors.title ? ' is-invalid':'' }}" id="title" name="title" value="{{ table.title }}" minlength="2" maxlength="50" required>
+                        <div class="invalid-feedback">{{ errors.title ? errors.title | first:'Görev giriniz.' }}</div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Düzenle</button> <button type="reset" class="btn btn-secondary reset"><i class="fas fa-eraser"></i> Formu Temizle</button>
+                {{ csrf.field | raw }}
+            </form>
+            <!-- New -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/job/edit.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/job/edit.js"></script>
+{% endblock %}

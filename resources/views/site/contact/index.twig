@@ -1,0 +1,73 @@
+{% extends 'site/templates/app.twig' %}
+
+{% block content %}
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path_for('home') }}">Ana Sayfa</a></li>
+            <li class="breadcrumb-item active" aria-current="page">İletişim</li>
+        </ol>
+    </nav>
+    <!-- Breadcrumb -->
+    <div class="container-fluid mt-3">
+        <h1 class="mb-3">İletişim</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>{{ table.name }}</strong></p>
+
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-envelope"></i> {{ table.mail }}</li>
+                    <li class="mb-2"><i class="fab fa-whatsapp"></i> {{ table.whatsapp }}</li>
+                    <li class="mb-2"><i class="fab fa-facebook"></i> <a target="_blank" href="{{ table.facebook }}">antikyumkoleksiyon</a></li>
+                    <li><i class="fab fa-instagram"></i> <a target="_blank" href="{{ table.instagram }}">antikyum</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <!-- Contact Form -->
+                <div class="card">
+
+                    <div class="card-body">
+                        <form id="form-offer" action="{{ current_path() }}" method="post" class="needs-validation" autocomplete="off" novalidate>
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="name">Adınız</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ old.name }}" minlength="6" maxlength="50" required>
+                                    <div class="invalid-feedback">{{ errors.name ? errors.name | first : 'Adınızı giriniz!' }}</div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="mail">E-posta</label>
+                                    <input type="mail" class="form-control" id="mail" name="mail" value="{{ old.mail }}" minlength="6" maxlength="320" required>
+                                    <div class="invalid-feedback">{{ errors.mail ? errors.mail | first : 'E-posta giriniz!' }}</div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="phone">Telefon</label>
+                                    <input type="mail" class="form-control" id="phone" name="phone" value="{{ old.phone }}" placeholder="05xxxxxxxxx" minlength="11" maxlength="11" required>
+                                    <div class="invalid-feedback">{{ errors.phone ? errors.phone | first : 'Telefon giriniz!' }}</div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="price">Mesajınız</label>
+                                    <textarea class="form-control" id="message" name="message" value="{{ old.message }}" rows="5" required></textarea>
+                                    <div class="invalid-feedback">{{ errors.message ? errors.message | first : 'Mesajınızı giriniz!' }}</div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" type="submit">Gönder</button>
+
+                            {{ csrf.field | raw }}
+                        </form>
+                    </div>
+                </div>
+                <!-- Contact Form -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/site/contact/index.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/library/lazysizes.min.js"></script>
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/site/contact/index.js"></script>
+{% endblock %}

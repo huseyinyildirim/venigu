@@ -1,0 +1,16 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-tachometer-alt"></i> Panel</p>
+        <!-- Header -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            Panel
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/home/index.css">
+{% endblock %}

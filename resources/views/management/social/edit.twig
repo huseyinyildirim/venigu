@@ -1,0 +1,126 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-share-square"></i> Sosyal Medya</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="#">Ayarlar</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Sosyal Medya</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <!-- New -->
+            <form id="form-new" action="{{ current_path() }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="facebook">Facebook</label>
+                        <input type="text" class="form-control{{ errors.facebook ? ' is-invalid':'' }}" id="facebook" name="facebook" value="{{ table.facebook }}" maxlength="100" placeholder="https://www.facebook.com/username">
+                        <div class="invalid-feedback">{{ errors.facebook | first }}</div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="facebook_username">Facebook Username</label>
+                        <input type="text" class="form-control{{ errors.facebook_username ? ' is-invalid':'' }}" id="facebook_username" name="facebook_username" value="{{ table.facebook_username }}" maxlength="50" placeholder="@username">
+                        <div class="invalid-feedback">{{ errors.facebook_username | first }}</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="twitter">Twitter</label>
+                        <input type="text" class="form-control{{ errors.facebook ? ' is-invalid':'' }}" id="twitter" name="twitter" value="{{ table.twitter }}" maxlength="100" placeholder="https://www.twitter.com/username">
+                        <div class="invalid-feedback">{{ errors.facebook | first }}</div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="twitter_username">Twitter Username</label>
+                        <input type="text" class="form-control{{ errors.twitter_username ? ' is-invalid':'' }}" id="twitter_username" name="twitter_username" value="{{ table.twitter_username }}" maxlength="50" placeholder="@username">
+                        <div class="invalid-feedback">{{ errors.twitter_username | first }}</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="instagram">Instagram</label>
+                        <input type="text" class="form-control{{ errors.instagram ? ' is-invalid':'' }}" id="instagram" name="instagram" value="{{ table.instagram }}" maxlength="100" placeholder="https://www.instagram.com/username">
+                        <div class="invalid-feedback">{{ errors.instagram | first }}</div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="instagram_username">Instagram Username</label>
+                        <input type="text" class="form-control{{ errors.instagram_username ? ' is-invalid':'' }}" id="instagram_username" name="instagram_username" value="{{ table.instagram_username }}" maxlength="50" placeholder="@username">
+                        <div class="invalid-feedback">{{ errors.instagram_username | first }}</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="google_plus">Google Plus</label>
+                        <input type="text" class="form-control{{ errors.google_plus ? ' is-invalid':'' }}" id="google_plus" name="google_plus" value="{{ table.google_plus }}" maxlength="100">
+                        <div class="invalid-feedback">{{ errors.google_plus | first }}</div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="google_plus_username">Google Plus Username</label>
+                        <input type="text" class="form-control{{ errors.google_plus_username ? ' is-invalid':'' }}" id="google_plus_username" name="google_plus_username" value="{{ table.google_plus_username }}" maxlength="50" placeholder="@username">
+                        <div class="invalid-feedback">{{ errors.google_plus_username | first }}</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="pinterest">Pinterest Plus</label>
+                        <input type="text" class="form-control{{ errors.pinterest ? ' is-invalid':'' }}" id="pinterest" name="pinterest" value="{{ table.pinterest }}" maxlength="100" placeholder="https://www.pinterest.com/username">
+                        <div class="invalid-feedback">{{ errors.pinterest | first }}</div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="pinterest_username">Pinterest Username</label>
+                        <input type="text" class="form-control{{ errors.pinterest_username ? ' is-invalid':'' }}" id="pinterest_username" name="pinterest_username" value="{{ table.pinterest_username }}" maxlength="50" placeholder="@username">
+                        <div class="invalid-feedback">{{ errors.pinterest_username | first }}</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="linkedin">Linkedin Plus</label>
+                        <input type="text" class="form-control{{ errors.linkedin ? ' is-invalid':'' }}" id="linkedin" name="linkedin" value="{{ table.linkedin }}" maxlength="100" placeholder="https://www.linkedin.com/username">
+                        <div class="invalid-feedback">{{ errors.linkedin | first }}</div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="linkedin_username">Linkedin Username</label>
+                        <input type="text" class="form-control{{ errors.linkedin_username ? ' is-invalid':'' }}" id="linkedin_username" name="linkedin_username" value="{{ table.linkedin_username }}" maxlength="50" placeholder="@username">
+                        <div class="invalid-feedback">{{ errors.linkedin_username | first }}</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="tumblr">Tumblr Plus</label>
+                        <input type="text" class="form-control{{ errors.tumblr ? ' is-invalid':'' }}" id="tumblr" name="tumblr" value="{{ table.tumblr }}" maxlength="100" placeholder="https://www.tumblr.com/username">
+                        <div class="invalid-feedback">{{ errors.tumblr | first }}</div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="tumblr_username">Tumblr Username</label>
+                        <input type="text" class="form-control{{ errors.tumblr_username ? ' is-invalid':'' }}" id="tumblr_username" name="tumblr_username" value="{{ table.tumblr_username }}" maxlength="50" placeholder="@username">
+                        <div class="invalid-feedback">{{ errors.tumblr_username | first }}</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Düzenle</button> <button type="reset" class="btn btn-secondary reset"><i class="fas fa-eraser"></i> Formu Temizle</button>
+                {{ csrf.field | raw }}
+            </form>
+            <!-- New -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/social/edit.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/social/edit.js"></script>
+{% endblock %}

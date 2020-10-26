@@ -1,0 +1,105 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-user-tie"></i> Personel Düzenle</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="{{ path_for('management-employee') }}">Personeller</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Personel Düzenle</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <!-- New -->
+            <form id="form-new" action="{{ current_path() }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="company_id">Firma</label>
+                        <select class="form-control" id="company_id" name="company_id" required>
+                            <option value="">Firma Seçiniz</option>
+                            {% set company = getTable('App\\Models\\TblCompany') %}
+                            {% if not company is empty %}
+                                {% for item in company %}
+                                    <option value="{{ item.id }}"{{ table.company_id == item.id ? ' selected' : null }}>{{ item.title }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        <div class="invalid-feedback">{{ errors.company_id ? errors.company_id | first:'Firma seçiniz.' }}</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Ad Soyad</label>
+                        <input type="text" class="form-control{{ errors.name ? ' is-invalid':'' }}" id="name" name="name" value="{{ table.name }}" minlength="6" maxlength="255" required>
+                        <div class="invalid-feedback">{{ errors.name ? errors.name | first:'Ad Soyad giriniz.' }}</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="mail">E-posta Adresi</label>
+                        <input type="email" class="form-control{{ errors.mail ? ' is-invalid':'' }}" id="mail" name="mail" value="{{ table.mail }}" minlength="5" maxlength="320" required>
+                        <div class="invalid-feedback">{{ errors.mail ? errors.mail | first:'E-posta adresi giriniz.' }}</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="phone">Telefon</label>
+                        <input type="text" class="form-control{{ errors.phone ? ' is-invalid':'' }}" id="phone" name="phone" value="{{ table.phone }}" minlength="10" maxlength="10" placeholder="5xxxxxxxxx" required>
+                        <div class="invalid-feedback">{{ errors.phone ? errors.phone | first:'Telefon giriniz.' }}</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="password">Şifre</label>
+                        <input type="password" class="form-control{{ errors.password ? ' is-invalid':'' }}" id="password" name="password" disabled>
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            Şifreyi değiştirmek istemiyorsanız boş bırakın.
+                        </small>
+                        <div class="invalid-feedback">{{ errors.password ? errors.password | first:'Şifre giriniz.' }}</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="password_confirm">Şifre Tekrar</label>
+                        <input type="password" class="form-control{{ errors.password_confirm ? ' is-invalid':'' }}" id="password_confirm" name="password_confirm" disabled>
+                        <div class="invalid-feedback">{{ errors.password_confirm ? errors.password_confirm | first:'Şifre tekrar giriniz.' }}</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="icheck-primary">
+                        <input type="checkbox" id="password_change" name="password_change">
+                        <label for="password_change">
+                            Şifremi değiştirmek istiyorum.
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="switch">
+                        <input type="checkbox" class="switch" id="switch-normal" name="is_active" {{ table.is_active=='1' ? ' checked' : null }}>
+                        <label for="switch-normal">Aktif mi?</label>
+                      </span>
+                </div>
+
+                <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Düzenle</button> <button type="reset" class="btn btn-secondary reset"><i class="fas fa-eraser"></i> Formu Temizle</button>
+                {{ csrf.field | raw }}
+            </form>
+            <!-- New -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/library/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="{{ base_url() }}/assets/library/bs4-switch.min.css">
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/employee/edit.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/employee/edit.js"></script>
+{% endblock %}

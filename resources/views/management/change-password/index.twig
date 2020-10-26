@@ -1,0 +1,57 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-users"></i> Şifre Değiştir</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Şifre Değiştir</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <div class="row">
+                <div class="col-6 mx-auto">
+                    <form action="{{ current_path() }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+
+                        <div class="form-group">
+                            <label for="password_old">Mevcut Şifreniz</label>
+                            <input type="password" name="password_old" id="password_old" class="form-control{{ errors.password_old ? ' is-invalid':'' }}" minlength="1" required>
+                            <div class="invalid-feedback">{{ errors.password_old ? errors.password_old | first:'Mevcut şifre giriniz.' }}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Yeni Şifre Tekrar</label>
+                            <input type="password" name="password" id="password" class="form-control{{ errors.password ? ' is-invalid':'' }}" minlength="1" required>
+                            <div class="invalid-feedback">{{ errors.password ? errors.password | first:'Yeni şifre giriniz.' }}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password_again">Yeni Şifre Tekrar</label>
+                            <input type="password" name="password_again" id="password_again" class="form-control{{ errors.password_again ? ' is-invalid':'' }}" minlength="1" required>
+                            <div class="invalid-feedback">{{ errors.password_again ? errors.password_again | first:'Yeni şifreyi tekrar giriniz.' }}</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Şifre Değiştir</button>
+
+                        {{ csrf.field | raw }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/change-password/index.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/change-password/index.js"></script>
+{% endblock %}

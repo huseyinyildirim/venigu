@@ -1,0 +1,34 @@
+body,html {
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/*
+Breadcrumb
+ */
+.breadcrumb {
+    border-radius: 0;
+}
+/*
+Breadcrumb
+ */
+
+/*
+Product Card
+ */
+.card-price {
+    position: absolute; right: 0%; top:10px;
+}
+
+.card-is-sold {
+    position: absolute; left: 0%; top:10px;
+    z-index: 2;
+}
+
+.card-product-new {
+    position: absolute; right: 0%; top:10px;
+    z-index: 2;
+}
+/*
+Product Card
+ */

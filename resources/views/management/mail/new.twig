@@ -1,0 +1,95 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-envelope"></i> E-posta Düzenle</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="#">Ayarlar</a></li>
+                <li class="breadcrumb-item"><a href="{{ path_for('management-mail') }}">E-posta Hesapları</a></li>
+                <li class="breadcrumb-item active" aria-current="page">E-posta Ekle</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <!-- Tab -->
+            <nav>
+                <div class="nav nav-tabs" id="general-tabs" role="tablist">
+                    <a class="nav-item nav-link" id="nav-list-tab" href="{{ path_for('management-mail') }}" role="tab" aria-controls="nav-list" aria-selected="true"><i class="fas fa-list-ol"></i> Listele</a>
+                    <a class="nav-item nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="false"><i class="fas fa-plus"></i> Ekle</a>
+                </div>
+            </nav>
+            <div class="tab-content p-3 border border-top-0" id="nav-tabContent">
+                <!-- New -->
+                <div class="tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+                    <form id="form-new" action="{{ current_path() }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="type">Protokol</label>
+                                <select class="form-control" id="type" name="type" required>
+                                    <option value="">Protokol Seçiniz</option>
+                                    <option value="1"{{ old.type == 1 ? ' selected' : null }}>SMTP</option>
+                                    <option value="2"{{ old.type == 2 ? ' selected' : null }}>POP</option>
+                                    <option value="3"{{ old.type == 3 ? ' selected' : null }}>IMAP</option>
+                                </select>
+                                <div class="invalid-feedback">{{ errors.type ? errors.type | first:'Protokol seçiniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="host">Host</label>
+                                <input type="text" class="form-control{{ errors.host ? ' is-invalid':'' }}" id="host" name="host" value="{{ old.host }}" minlength="5" maxlength="100" required>
+                                <div class="invalid-feedback">{{ errors.host ? errors.host | first:'Host giriniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="username">E-posta</label>
+                                <input type="text" class="form-control{{ errors.username ? ' is-invalid':'' }}" id="username" name="username" value="{{ old.username }}" maxlength="320" required>
+                                <div class="invalid-feedback">{{ errors.username ? errors.username | first:'E-posta giriniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="password">Şifre</label>
+                                <input type="text" class="form-control{{ errors.password ? ' is-invalid':'' }}" id="password" name="password" value="{{ old.password }}" maxlength="50" required>
+                                <div class="invalid-feedback">{{ errors.password ? errors.password | first:'Şifre giriniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="port">Port</label>
+                                <input type="text" class="form-control{{ errors.port ? ' is-invalid':'' }}" id="port" name="port" value="{{ old.port }}" maxlength="3" required>
+                                <div class="invalid-feedback">{{ errors.port ? errors.port | first:'Port giriniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="switch">
+                                <input type="checkbox" class="switch" id="switch-normal" name="use_ssl"{{ old.use_ssl=='on' ? ' checked' : null }}>
+                                <label for="switch-normal">SSL Aktif mi?</label>
+                            </span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Kaydet</button> <button type="reset" class="btn btn-secondary reset"><i class="fas fa-eraser"></i> Formu Temizle</button>
+                        {{ csrf.field | raw }}
+                    </form>
+                </div>
+                <!-- New -->
+            </div>
+            <!-- Tab -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/library/bs4-switch.min.css">
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/mail/new.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/mail/new.js"></script>
+{% endblock %}

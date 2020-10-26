@@ -1,0 +1,58 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-map-marked"></i> İlçe Düzenle</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="#">Lokasyon</a></li>
+                <li class="breadcrumb-item"><a href="{{ path_for('management-town') }}">İlçeler</a></li>
+                <li class="breadcrumb-item active" aria-current="page">İlçe Düzenle</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <!-- New -->
+            <form id="form-new" action="{{ current_path() }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="city_id">İl</label>
+                        <select class="form-control" id="city_id" name="city_id" required>
+                            <option value="">İl Seçiniz</option>
+                            {% set city = getTable('App\\Models\\TblSetupCity') %}
+                            {% if not city is empty %}
+                                {% for item in city %}
+                                    <option value="{{ item.id }}"{{ table.city_id == item.id ? ' selected' : null }}>{{ item.title }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        <div class="invalid-feedback">{{ errors.city_id ? errors.city_id | first:'İl seçiniz.' }}</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="title">İlçe</label>
+                        <input type="text" class="form-control{{ errors.title ? ' is-invalid':'' }}" id="title" name="title" value="{{ table.title }}" minlength="2" maxlength="50" required>
+                        <div class="invalid-feedback">{{ errors.title ? errors.title | first:'İlçe giriniz.' }}</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Düzenle</button> <button type="reset" class="btn btn-secondary reset"><i class="fas fa-eraser"></i> Formu Temizle</button>
+                {{ csrf.field | raw }}
+            </form>
+            <!-- New -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/town/edit.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/town/edit.js"></script>
+{% endblock %}

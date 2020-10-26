@@ -1,0 +1,200 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-cubes"></i> Form Alanları Düzenle</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="{{ path_for('management-service') }}">Hizmetler</a></li>
+                <li class="breadcrumb-item"><a href="{{ path_for('management-service-edit', {'id': getColumn('App\\Models\\TblService', null, table.service_id, 'id')}) }}">{{ getColumn('App\\Models\\TblService', null, table.service_id, 'title') }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Form Alanları Düzenle</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <!-- New -->
+            <form id="form-new" action="{{ current_path() }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <div class="icheck-primary">
+                        <input type="checkbox" id="detail" name="detail"{{ table.detail == '1' ? ' checked' : null }}>
+                        <label for="detail">
+                            Detay
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="icheck-primary">
+                        <input type="checkbox" id="note" name="note"{{ table.note == '1' ? ' checked' : null }}>
+                        <label for="note">
+                            Notlar
+                        </label>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="start_date" name="start_date"{{ table.start_date == '1' ? ' checked' : null }}>
+                            <label for="start_date">
+                                Alış Tarih
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="start_time" name="start_time"{{ table.start_time == '1' ? ' checked' : null }}>
+                            <label for="start_time">
+                                Alış Saat
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="start_address" name="start_address"{{ table.start_address == '1' ? ' checked' : null }}>
+                            <label for="start_address">
+                                Alış Adres
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="start_country_id" name="start_country_id"{{ table.start_country_id == '1' ? ' checked' : null }}>
+                            <label for="start_country_id">
+                                Alış Ülke
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="start_city_id" name="start_city_id"{{ table.start_city_id == '1' ? ' checked' : null }}>
+                            <label for="start_city_id">
+                                Alış İl
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="start_town_id" name="start_town_id"{{ table.start_town_id == '1' ? ' checked' : null }}>
+                            <label for="start_town_id">
+                                Alış İlçe
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="start_district_id" name="start_district_id"{{ table.start_district_id == '1' ? ' checked' : null }}>
+                            <label for="start_district_id">
+                                Alış Semt
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="target_address" name="target_address"{{ table.target_address == '1' ? ' checked' : null }}>
+                            <label for="target_address">
+                                Hedef Adres
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="target_country_id" name="target_country_id"{{ table.target_country_id == '1' ? ' checked' : null }}>
+                            <label for="target_country_id">
+                                Hedef Ülke
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="target_city_id" name="target_city_id"{{ table.target_city_id == '1' ? ' checked' : null }}>
+                            <label for="target_city_id">
+                                Hedef İl
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="target_town_id" name="target_town_id"{{ table.target_town_id == '1' ? ' checked' : null }}>
+                            <label for="target_town_id">
+                                Hedef İlçe
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="target_district_id" name="target_district_id"{{ table.target_district_id == '1' ? ' checked' : null }}>
+                            <label for="target_district_id">
+                                Hedef Semt
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="delivery_address" name="delivery_address"{{ table.delivery_address == '1' ? ' checked' : null }}>
+                            <label for="delivery_address">
+                                Teslim Adres
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="delivery_country_id" name="delivery_country_id"{{ table.delivery_country_id == '1' ? ' checked' : null }}>
+                            <label for="delivery_country_id">
+                                Teslim Ülke
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="delivery_city_id" name="delivery_city_id"{{ table.delivery_city_id == '1' ? ' checked' : null }}>
+                            <label for="delivery_city_id">
+                                Teslim İl
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="delivery_town_id" name="delivery_town_id"{{ table.delivery_town_id == '1' ? ' checked' : null }}>
+                            <label for="delivery_town_id">
+                                Teslim İlçe
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="delivery_district_id" name="delivery_district_id"{{ table.delivery_district_id == '1' ? ' checked' : null }}>
+                            <label for="delivery_district_id">
+                                Teslim Semt
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Düzenle</button> <button type="reset" class="btn btn-secondary reset"><i class="fas fa-eraser"></i> Formu Temizle</button>
+
+                {{ csrf.field | raw }}
+            </form>
+            <!-- New -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/library/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/service/field.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/service/field.js"></script>
+{% endblock %}

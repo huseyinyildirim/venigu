@@ -1,0 +1,8 @@
+RewriteEngine on
+
+RewriteRule ^files/(.*) files/$1 [NC,L]
+
+RewriteRule ^$ public/ [L]
+RewriteRule (.*) public/$1 [L]
+
+RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

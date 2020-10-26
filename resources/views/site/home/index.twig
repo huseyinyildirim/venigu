@@ -1,0 +1,20 @@
+{% extends 'site/templates/app.twig' %}
+
+{% block content %}
+    <div class="container d-flex h-100">
+        <div class="row align-self-center w-100">
+            <div class="col-12 mb-3 text-center">
+                <h1>{{ getColumn('App\\Models\\TblSetupSystem', null, 1, 'title') }}</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/site/home/index.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/library/lazysizes.min.js"></script>
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/site/home/index.js"></script>
+{% endblock %}

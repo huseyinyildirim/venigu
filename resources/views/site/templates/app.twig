@@ -1,0 +1,99 @@
+{% set system = getRow('App\\Models\\TblSetupSystem', null, 1) %}
+{% set extension = getRow('App\\Models\\TblSetupExtension', null, 1) %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% if not system.seo_title is empty %}
+        <title>{{ system.seo_title | raw }}</title>
+    {% endif %}
+    {% if not system.seo_description is empty %}
+        <meta name="description" content="{{ system.seo_description | raw }}">
+    {% endif %}
+    {% if not system.seo_keyword is empty %}
+        <meta name="keywords" content="{{ system.seo_keyword | raw }}">
+    {% endif %}
+    {% if not system.seo_description is empty %}
+        <meta name="description" content="{{ system.seo_description | raw }}">
+    {% endif %}
+    {% if not system.meta_author is empty %}
+        <meta name="author" content="{{ system.meta_author | raw }}">
+    {% endif %}
+    {% if not system.meta_robots is empty %}
+        <meta name="robots" content="{{ system.meta_robots | raw }}">
+    {% endif %}
+    {% if not system.meta_application_name is empty %}
+        <meta name="application-name" content="{{ system.meta_application_name | raw }}">
+    {% endif %}
+
+    {% if not system.og_title is empty %}
+    <meta property="og:title" content="{{ system.og_title | raw }}" />
+    {% endif %}
+    {% if not system.og_description is empty %}
+    <meta property="og:description" content="{{ system.og_description | raw }}" />
+    {% endif %}
+    {% if not system.og_twitter_card is empty %}
+    <meta name="twitter:card" content="{{ system.og_twitter_card | raw }}" />
+    {% endif %}
+    {% if not system.og_twitter_site is empty %}
+    <meta name="twitter:site" content="{{ system.og_twitter_site | raw }}" />
+    {% endif %}
+    {% if not system.og_twitter_creator is empty %}
+    <meta name="twitter:creator" content="{{ system.og_twitter_creator | raw }}" />
+    {% endif %}
+
+    <link rel="canonical" href="{{ base_url() }}{{ current_path() }}">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% include 'site/templates/partials/styles.twig' %}
+
+    <!-- Inline Styles -->
+    {% block inlineStyles %}
+    {% endblock %}
+    <!-- Inline Scripts -->
+
+    <!-- No JS Error -->
+    <script type="text/javascript">
+        <!--
+        //noinspection JSConstructorReturnsPrimitive
+        function NoError() {return !0}
+        window.onerror = NoError();
+        //-->
+    </script>
+    <!-- No JS Error -->
+</head>
+<body class="bg-light">
+
+{% include 'site/templates/partials/navigation.twig' %}
+
+{% include 'site/templates/partials/flash.twig' %}
+
+{% block content %}{% endblock %}
+
+{% include 'site/templates/partials/footer.twig' %}
+
+{% include 'site/templates/partials/scripts.twig' %}
+
+{% if flash.getMessage('error') or flash.getMessage('info') or flash.getMessage('success') %}
+    <script type="text/javascript">
+        $('#flashModal').modal('show');
+    </script>
+{% endif %}
+
+<!-- Inline Scripts -->
+{% block inlineScripts %}
+{% endblock %}
+<!-- Inline Scripts -->
+
+{% if not extension.google_analytics is empty %}
+    {{ extension.google_analytics | htmlSpecialCharsDecode | raw }}
+{% endif %}
+{% if not extension.yandex_metrica is empty %}
+    {{ extension.yandex_metrica | htmlSpecialCharsDecode | raw }}
+{% endif %}
+{% if not extension.support_chat is empty %}
+    {{ extension.support_chat | htmlSpecialCharsDecode | raw }}
+{% endif %}
+</body>
+</html>

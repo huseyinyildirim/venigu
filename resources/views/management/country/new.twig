@@ -1,0 +1,83 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-globe"></i> Ülke Ekle</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="#">Lokasyon</a></li>
+                <li class="breadcrumb-item"><a href="{{ path_for('management-country') }}">Ülkeler</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Ülke Ekle</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <!-- Tab -->
+            <nav>
+                <div class="nav nav-tabs" id="general-tabs" role="tablist">
+                    <a class="nav-item nav-link" id="nav-list-tab" href="{{ path_for('management-country') }}" role="tab" aria-controls="nav-list" aria-selected="true"><i class="fas fa-list-ol"></i> Listele</a>
+                    <a class="nav-item nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="false"><i class="fas fa-plus"></i> Ekle</a>
+                </div>
+            </nav>
+            <div class="tab-content p-3 border border-top-0" id="nav-tabContent">
+                <!-- New -->
+                <div class="tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+                    <form id="form-new" action="{{ current_path() }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="binary_code">Kısa Kodu</label>
+                                <input type="text" class="form-control{{ errors.binary_code ? ' is-invalid':'' }}" id="binary_code" name="binary_code" value="{{ old.binary_code }}" minlength="2" maxlength="2" required>
+                                <div class="invalid-feedback">{{ errors.binary_code ? errors.binary_code | first:'Kısa kodu giriniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="triple_code">Uzun Kod</label>
+                                <input type="text" class="form-control{{ errors.triple_code ? ' is-invalid':'' }}" id="triple_code" name="triple_code" value="{{ old.triple_code }}" minlength="3" maxlength="3" required>
+                                <div class="invalid-feedback">{{ errors.triple_code ? errors.triple_code | first:'Uzun kodu giriniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="title">Ülke Adı</label>
+                                <input type="text" class="form-control{{ errors.title ? ' is-invalid':'' }}" id="title" name="title" value="{{ old.title }}" minlength="2" maxlength="50" required>
+                                <div class="invalid-feedback">{{ errors.title ? errors.title | first:'Ülke adını giriniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="phone_code">Telefon Kodu</label>
+                                <input type="text" class="form-control{{ errors.phone_code ? ' is-invalid':'' }}" id="phone_code" name="phone_code" value="{{ old.phone_code }}" maxlength="6" required>
+                                <div class="invalid-feedback">{{ errors.phone_code ? errors.phone_code | first:'Telefon kodunu giriniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="switch">
+                                <input type="checkbox" class="switch" id="switch-normal" name="is_active" {{ old.is_active=='on' ? ' checked' : null }}>
+                                <label for="switch-normal">Aktif mi?</label>
+                            </span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Kaydet</button> <button type="reset" class="btn btn-secondary reset"><i class="fas fa-eraser"></i> Formu Temizle</button>
+                        {{ csrf.field | raw }}
+                    </form>
+                </div>
+                <!-- New -->
+            </div>
+            <!-- Tab -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/library/bs4-switch.min.css">
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/country/new.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/country/new.js"></script>
+{% endblock %}

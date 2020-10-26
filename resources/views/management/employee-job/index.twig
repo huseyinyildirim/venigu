@@ -1,0 +1,96 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-briefcase"></i> Atanan Görevler</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="{{ path_for('management-employee') }}">Personeller</a></li>
+                <li class="breadcrumb-item"><a href="#">{{ getColumn('App\\Models\\TblEmployee', null, table.employee_id, 'name') }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Atanan Görevler</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <!-- Tab -->
+            <nav>
+                <div class="nav nav-tabs" id="general-tabs" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-list-tab" data-toggle="tab" href="#nav-list" role="tab" aria-controls="nav-list" aria-selected="true"><i class="fas fa-list-ol"></i> Atanan Görevler</a>
+                    <a class="nav-item nav-link" id="nav-new-tab" href="{{ path_for('management-employee-job-new', {'id': table.employee_id}) }}" role="tab" aria-controls="nav-search" aria-selected="false"><i class="fas fa-plus"></i> Görev Tanımlama</a>
+                </div>
+            </nav>
+            <div class="tab-content p-3 border border-top-0" id="nav-tabContent">
+                <!-- List -->
+                <div class="tab-pane fade show active" id="nav-list" role="tabpanel" aria-labelledby="nav-list-tab">
+                    {% if not table.jobs is empty %}
+                        <!-- Records -->
+                        <div class="table-responsive">
+                            <form action="{{ path_for('management-employee-job-all-delete', {'id': table.employee_id}) }}" method="post">
+                                <table class="table table-striped table-bordered mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center" style="width: 70px;">
+                                            <div class="icheck-warning">
+                                                <input type="checkbox" id="checkedAll" />
+                                                <label for="checkedAll"></label>
+                                            </div>
+                                        </th>
+                                    <th scope="col" class="text-center" style="width: 75px;">#</th>
+                                    <th scope="col">Görev</th>
+                                    <th scope="col" style="width: 90px;">İşlemler</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in table.jobs %}
+                                    <tr>
+                                        <td class="text-center">
+                                            <div class="icheck-warning">
+                                                <input type="checkbox" class="checkSingle" id="someCheckbox{{ item.id }}" name="id[]" value="{{ item.id }}" />
+                                                <label for="someCheckbox{{ item.id }}"></label>
+                                            </div>
+                                        </td>
+                                        <th scope="row" class="text-center">{{ item.id }}</th>
+                                        <td>{{ getColumn('App\\Models\\TblJob', null, item.job_id, 'title') }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ path_for('management-employee-job-delete', {'id': table.employee_id, 'jobId': item.id}) }}" role="button" class="btn btn-danger btn-sm text-white row-delete" data-toggle="tooltip" data-placement="top" title="Sil"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        <button type="submit" id="btn-all-delete" class="btn btn-danger btn-sm row-delete" disabled><i class="far fa-trash-alt"></i> Seçilenleri Sil</button>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            {{ csrf.field | raw }}
+                            </form>
+                        </div>
+                        <!-- Records -->
+                    {% else %}
+                        <div class="alert alert-info mb-0" role="alert">
+                            <i class="fas fa-info-circle"></i> {{ constant('App\\Config\\Message\\Emptys::TABLE') }}
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- List -->
+            </div>
+            <!-- Tab -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/library/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/employee-job/index.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/employee-job/index.js"></script>
+{% endblock %}

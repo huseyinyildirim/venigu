@@ -1,0 +1,64 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-briefcase"></i> Görev Tanımlama</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="{{ path_for('management-employee') }}">Personeller</a></li>
+                <li class="breadcrumb-item"><a href="#">{{ getColumn('App\\Models\\TblEmployee', null, table.employee_id, 'name') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ path_for('management-employee-job', {'id': table.employee_id}) }}">Atanan Görevler</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Görev Tanımlama</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <!-- Tab -->
+            <nav>
+                <div class="nav nav-tabs" id="general-tabs" role="tablist">
+                    <a class="nav-item nav-link" id="nav-list-tab" href="{{ path_for('management-employee-job', {'id': table.employee_id}) }}" role="tab" aria-controls="nav-list" aria-selected="true"><i class="fas fa-list-ol"></i> Atanan Görevler</a>
+                    <a class="nav-item nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="false"><i class="fas fa-plus"></i> Görev Tanımlama</a>
+                </div>
+            </nav>
+            <div class="tab-content p-3 border border-top-0" id="nav-tabContent">
+                <!-- New -->
+                <div class="tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+                    <form id="form-new" action="{{ current_path() }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="job_id">Görev</label>
+                                <select class="form-control" id="job_id" name="job_id" required>
+                                    <option value="">Görev Seçiniz</option>
+                                    {% set jobs = getTable('App\\Models\\TblJob') %}
+                                    {% if not jobs is empty %}
+                                        {% for item in jobs %}
+                                            <option value="{{ item.id }}"{{ old.job_id == item.id ? ' selected' : null }}>{{ item.title }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                <div class="invalid-feedback">{{ errors.job_id ? errors.job_id | first:'Görev seçiniz.' }}</div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Kaydet</button> <button type="reset" class="btn btn-secondary reset"><i class="fas fa-eraser"></i> Formu Temizle</button>
+                        {{ csrf.field | raw }}
+                    </form>
+                </div>
+                <!-- New -->
+            </div>
+            <!-- Tab -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/employee-job/new.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/employee-job/new.js"></script>
+{% endblock %}

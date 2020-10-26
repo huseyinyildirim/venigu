@@ -1,0 +1,192 @@
+{% extends 'management/templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <!-- Header -->
+        <p class="lead"><i class="fas fa-cog"></i> Sistem</p>
+        <!-- Header -->
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path_for('management') }}">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="#">Ayarlar</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Sistem</li>
+            </ol>
+        </nav>
+        <!-- Breadcrumb -->
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <!-- New -->
+            <form id="form-new" action="{{ current_path() }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab" aria-controls="nav-general" aria-selected="true">Genel Ayarlar</a>
+                        <a class="nav-item nav-link" id="nav-seo-tab" data-toggle="tab" href="#nav-seo" role="tab" aria-controls="nav-seo" aria-selected="false">SEO</a>
+                        <a class="nav-item nav-link" id="nav-mail-tab" data-toggle="tab" href="#nav-mail" role="tab" aria-controls="nav-mail" aria-selected="false">E-posta</a>
+                        <a class="nav-item nav-link" id="nav-meta-tab" data-toggle="tab" href="#nav-meta" role="tab" aria-controls="nav-meta" aria-selected="false">Meta</a>
+                        <a class="nav-item nav-link" id="nav-opengraph-tab" data-toggle="tab" href="#nav-opengraph" role="tab" aria-controls="nav-opengraph" aria-selected="false">Open Graph</a>
+                    </div>
+                </nav>
+                <div class="tab-content p-3 mb-3 border-left border-bottom border-right" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="title">Başlık</label>
+                                <input type="text" class="form-control{{ errors.title ? ' is-invalid':'' }}" id="title" name="title" value="{{ table.title }}" maxlength="50" required>
+                                <div class="invalid-feedback">{{ errors.title ? errors.title | first : 'Başlık giriniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="domain">Domain</label>
+                                <input type="text" class="form-control{{ errors.domain ? ' is-invalid':'' }}" id="domain" name="domain" value="{{ table.domain }}" maxlength="200" required>
+                                <div class="invalid-feedback">{{ errors.domain ? errors.domain | first : 'Domain giriniz.' }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-seo" role="tabpanel" aria-labelledby="nav-seo-tab">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="seo_title">Title</label>
+                                <input type="text" class="form-control{{ errors.seo_title ? ' is-invalid':'' }}" id="seo_title" name="seo_title" value="{{ table.seo_title }}" maxlength="70" required>
+                                <div class="invalid-feedback">{{ errors.seo_title ? errors.seo_title | first : 'Başlık giriniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="seo_description">Description</label>
+                                <input type="text" class="form-control{{ errors.seo_description ? ' is-invalid':'' }}" id="seo_description" name="seo_description" value="{{ table.seo_description }}" maxlength="100" required>
+                                <div class="invalid-feedback">{{ errors.seo_description ? errors.seo_description | first : 'Açıklama giriniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="seo_keyword">Keywords</label>
+                                <input type="text" class="form-control{{ errors.seo_keyword ? ' is-invalid':'' }}" id="seo_keyword" name="seo_keyword" value="{{ table.seo_keyword }}" maxlength="150">
+                                <div class="invalid-feedback">{{ errors.seo_keyword ? errors.seo_keyword | first : 'Anahtar giriniz.' }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-mail" role="tabpanel" aria-labelledby="nav-mail-tab">
+                        <!-- Mail -->
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="parent_id">Varsayılan E-posta Adresi</label>
+                                <select class="form-control" id="default_mail_id" name="default_mail_id">
+                                    <option value="">E-posta Yok</option>
+                                    {% set mail = getTable('App\\Models\\TblSetupMail') %}
+                                    {% if not mail is empty %}
+                                        {% for item in mail %}
+                                            <option value="{{ item.id }}"{{ table.default_mail_id == item.id ? ' selected' : null }}>{{ item.username }} ({{ item.host }})</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                <div class="invalid-feedback">{{ errors.default_mail_id ? errors.default_mail_id | first:'Varsayılan e-posta hesabını seçiniz.' }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="contact_mail_id">İletişim E-posta Adresi</label>
+                                <select class="form-control" id="contact_mail_id" name="contact_mail_id">
+                                    <option value="">E-posta Yok</option>
+                                    {% set mail = getTable('App\\Models\\TblSetupMail') %}
+                                    {% if not mail is empty %}
+                                        {% for item in mail %}
+                                            <option value="{{ item.id }}"{{ table.contact_mail_id == item.id ? ' selected' : null }}>{{ item.username }} ({{ item.host }})</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                <div class="invalid-feedback">{{ errors.contact_mail_id ? errors.contact_mail_id | first:'İletişim e-posta hesabını seçiniz.' }}</div>
+                            </div>
+                        </div>
+                        <!-- Mail -->
+                    </div>
+                    <div class="tab-pane fade" id="nav-meta" role="tabpanel" aria-labelledby="nav-meta-tab">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="meta_author">Author</label>
+                                <input type="text" class="form-control{{ errors.meta_author ? ' is-invalid':'' }}" id="meta_author" name="meta_author" value="{{ table.meta_author }}" maxlength="150" placeholder="John Deo">
+                                <div class="invalid-feedback">{{ errors.meta_author | first }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="meta_robots">Robots</label>
+                                <input type="text" class="form-control{{ errors.meta_robots ? ' is-invalid':'' }}" id="meta_robots" name="meta_robots" value="{{ table.meta_robots }}" maxlength="150">
+                                <small id="emailHelp" class="form-text text-muted">all, noindex, nofollow, none, noarchive, nosnippet, notranslate, noimageindex</small>
+                                <div class="invalid-feedback">{{ errors.meta_robots | first }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="meta_application_name">Application Name</label>
+                                <input type="text" class="form-control{{ errors.meta_application_name ? ' is-invalid':'' }}" id="meta_application_name" name="meta_application_name" value="{{ table.meta_application_name }}" maxlength="150" placeholder="domain.com">
+                                <div class="invalid-feedback">{{ errors.meta_application_name | first }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="meta_other">Diğer Meta</label>
+                                <textarea class="form-control{{ errors.meta_other ? ' is-invalid':'' }}" id="meta_other" name="meta_other" rows="5">{{ table.meta_other | raw }}</textarea>
+                                <div class="invalid-feedback">{{ errors.meta_other | first }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-opengraph" role="tabpanel" aria-labelledby="nav-opengraph-tab">
+                        <div class="alert alert-info" role="alert">
+                            <p><strong>Open Graph Nedir?</strong></p>
+                            Sosyal medya üzerindeki site paylaşımlarının nitelikli ve anlamsal hale gelmesini amaçlayan bir uygulamadır.
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="og_title">Title</label>
+                                <input type="text" class="form-control{{ errors.og_title ? ' is-invalid':'' }}" id="og_title" name="og_title" value="{{ table.og_title }}" maxlength="50">
+                                <div class="invalid-feedback">{{ errors.og_title | first }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="og_description">Description</label>
+                                <input type="text" class="form-control{{ errors.og_description ? ' is-invalid':'' }}" id="og_description" name="og_description" value="{{ table.og_description }}" maxlength="100">
+                                <div class="invalid-feedback">{{ errors.og_description | first }}</div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="og_twitter_card">Twitter Card</label>
+                                <input type="text" class="form-control{{ errors.og_twitter_card ? ' is-invalid':'' }}" id="og_twitter_card" name="og_twitter_card" value="{{ table.og_twitter_card }}" maxlength="50" placeholder="summary">
+                                <div class="invalid-feedback">{{ errors.og_twitter_card | first }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="og_twitter_site">Twitter Site</label>
+                                <input type="text" class="form-control{{ errors.og_twitter_site ? ' is-invalid':'' }}" id="og_twitter_site" name="og_twitter_site" value="{{ table.og_twitter_site }}" maxlength="50" placeholder="@username">
+                                <div class="invalid-feedback">{{ errors.og_twitter_site | first }}</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="og_twitter_creator">Twitter Creator</label>
+                                <input type="text" class="form-control{{ errors.og_twitter_creator ? ' is-invalid':'' }}" id="og_twitter_creator" name="og_twitter_creator" value="{{ table.og_twitter_creator }}" maxlength="50" placeholder="@username">
+                                <div class="invalid-feedback">{{ errors.og_twitter_creator | first }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Düzenle</button> <button type="reset" class="btn btn-secondary reset"><i class="fas fa-eraser"></i> Formu Temizle</button>
+                {{ csrf.field | raw }}
+            </form>
+            <!-- New -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block inlineStyles %}
+    <link rel="stylesheet" href="{{ base_url() }}/assets/css/management/system/edit.css">
+{% endblock %}
+
+{% block inlineScripts %}
+    <script type="text/javascript" src="{{ base_url() }}/assets/js/management/system/edit.js"></script>
+{% endblock %}
